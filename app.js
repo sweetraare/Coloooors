@@ -5,7 +5,8 @@ let initalColors;
 const colorDivs = document.querySelectorAll(".color");
 const generateColors = document.querySelector(".generate");
 const sliders = document.querySelectorAll('input[type="range"]');
-const currentHex = document.querySelectorAll(".h2 color");
+const currentHex = document.querySelectorAll(".color h2");
+const copyContainer = document.querySelector(".copy-container");
 
 //event listeners
 sliders.forEach((slider) => {
@@ -16,6 +17,17 @@ colorDivs.forEach((colorDiv, index) => {
   colorDiv.addEventListener("change", () => {
     updateText(index);
   });
+});
+
+currentHex.forEach((ch) => {
+  ch.addEventListener("click", () => {
+    copyToClipborard(ch);
+  });
+});
+
+copyContainer.addEventListener("click", () => {
+  copyContainer.classList.remove("active");
+  copyContainer.children[0].classList.remove("active");
 });
 
 //functions
@@ -53,32 +65,6 @@ function colorizeSliders({ color, hue, brightness, saturation }) {
   hue.style.backgroundImage = `linear-gradient(to right, rgb(204,75,75),rgb(204,204,75),rgb(75,204,75),rgb(75,204,204),rgb(75,75,204),rgb(204,75,204),rgb(204,75,75))`;
 }
 
-function randomColors() {
-  initalColors = [];
-  colorDivs.forEach((colorDiv) => {
-    const text = colorDiv.querySelector("h2");
-    const icons = colorDiv.querySelectorAll("i");
-
-    const randomColor = generateRandomColor();
-    initalColors.push(randomColor);
-    text.innerText = randomColor;
-    colorDiv.style.backgroundColor = randomColor;
-    checkContrast(randomColor, text);
-
-    icons.forEach((icon) => {
-      checkContrast(randomColor, icon);
-    });
-
-    const color = chroma(randomColor);
-
-    const hue = colorDiv.querySelector(`[name="hue"]`);
-    const brightness = colorDiv.querySelector(`[name="brightness"]`);
-    const saturation = colorDiv.querySelector(`[name="saturation"]`);
-
-    colorizeSliders({ color, hue, brightness, saturation });
-  });
-}
-
 function hslControls(e) {
   const index =
     e.target.getAttribute("data-hue") ||
@@ -105,6 +91,12 @@ function hslControls(e) {
     .set("hsl.l", newColorObj.brightness);
 
   selectedColorDiv.style.backgroundColor = newColor;
+
+  const hue = sliders[0];
+  const brightness = sliders[1];
+  const saturation = sliders[2];
+
+  colorizeSliders({ color: newColor, hue, brightness, saturation });
 }
 
 function updateText(index) {
@@ -121,6 +113,70 @@ function updateText(index) {
   icons.forEach((icon) => {
     checkContrast(color, icon);
   });
+}
+
+function resetSliders() {
+  sliders.forEach((slider) => {
+    if (slider.name === "hue") {
+      const hueColor = initalColors[slider.getAttribute("data-hue")];
+      const hueValue = hueColor.hsl()[0];
+      slider.value = hueValue;
+    }
+
+    if (slider.name === "saturation") {
+      const saturationColor =
+        initalColors[slider.getAttribute("data-saturation")];
+      const saturationValue = saturationColor.hsl()[1];
+      slider.value = saturationValue;
+    }
+
+    if (slider.name === "brightness") {
+      const brightnessColor =
+        initalColors[slider.getAttribute("data-brightness")];
+      const brightnessValue = brightnessColor.hsl()[2];
+      slider.value = brightnessValue;
+    }
+  });
+}
+
+function copyToClipborard(hex) {
+  const auxElement = document.createElement("textarea");
+  auxElement.value = hex.innerText;
+  document.body.appendChild(auxElement);
+  auxElement.select();
+  document.execCommand("copy");
+  document.body.removeChild(auxElement);
+
+  copyContainer.classList.add("active");
+  copyContainer.children[0].classList.add("active");
+}
+
+function randomColors() {
+  initalColors = [];
+  colorDivs.forEach((colorDiv) => {
+    const text = colorDiv.querySelector("h2");
+    const icons = colorDiv.querySelectorAll("i");
+
+    const randomColor = generateRandomColor();
+    initalColors.push(randomColor);
+    text.innerText = randomColor;
+    colorDiv.style.backgroundColor = randomColor;
+    checkContrast(randomColor, text);
+
+    icons.forEach((icon) => {
+      checkContrast(randomColor, icon);
+    });
+
+    const color = chroma(randomColor);
+
+    const hue = colorDiv.querySelector(`[name="hue"]`);
+    const brightness = colorDiv.querySelector(`[name="brightness"]`);
+    const saturation = colorDiv.querySelector(`[name="saturation"]`);
+
+    colorizeSliders({ color, hue, brightness, saturation });
+  });
+
+  resetSliders();
 }
 
 randomColors();
