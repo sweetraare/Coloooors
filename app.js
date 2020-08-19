@@ -8,7 +8,9 @@ const sliders = document.querySelectorAll('input[type="range"]');
 const currentHex = document.querySelectorAll(".color h2");
 const copyContainer = document.querySelector(".copy-container");
 const adjustButtons = document.querySelectorAll(".adjust");
+const lockButtons = document.querySelectorAll(".lock");
 const closeAdjustmentButtons = document.querySelectorAll(".close-adjustment");
+const generateButton = document.querySelector("button.generate");
 
 //event listeners
 sliders.forEach((slider) => {
@@ -42,6 +44,12 @@ closeAdjustmentButtons.forEach((closeAdjustmentButton) => {
   closeAdjustmentButton.addEventListener("click", (e) => {
     e.target.parentElement.classList.toggle("active");
   });
+});
+
+generateButton.addEventListener("click", randomColors);
+
+lockButtons.forEach((lockButton) => {
+  lockButton.addEventListener("click", () => handleLockButtonClick(lockButton));
 });
 
 //functions
@@ -132,21 +140,23 @@ function updateText(index) {
 function resetSliders() {
   sliders.forEach((slider) => {
     if (slider.name === "hue") {
-      const hueColor = initalColors[slider.getAttribute("data-hue")];
+      const hueColor = chroma(initalColors[slider.getAttribute("data-hue")]);
       const hueValue = hueColor.hsl()[0];
       slider.value = hueValue;
     }
 
     if (slider.name === "saturation") {
-      const saturationColor =
-        initalColors[slider.getAttribute("data-saturation")];
+      const saturationColor = chroma(
+        initalColors[slider.getAttribute("data-saturation")]
+      );
       const saturationValue = saturationColor.hsl()[1];
       slider.value = saturationValue;
     }
 
     if (slider.name === "brightness") {
-      const brightnessColor =
-        initalColors[slider.getAttribute("data-brightness")];
+      const brightnessColor = chroma(
+        initalColors[slider.getAttribute("data-brightness")]
+      );
       const brightnessValue = brightnessColor.hsl()[2];
       slider.value = brightnessValue;
     }
@@ -171,6 +181,20 @@ function handleAdjustButtonClick(adjustButton) {
     .classList.toggle("active");
 }
 
+function handleLockButtonClick(lockButton) {
+  const icon = lockButton.children[0];
+
+  if (icon.classList.contains("fa-lock-open")) {
+    icon.classList.remove("fa-lock-open");
+    icon.classList.add("fa-lock");
+  } else {
+    icon.classList.remove("fa-lock");
+    icon.classList.add("fa-lock-open");
+  }
+
+  lockButton.parentElement.parentElement.classList.toggle("locked");
+}
+
 function randomColors() {
   initalColors = [];
   colorDivs.forEach((colorDiv) => {
@@ -178,7 +202,14 @@ function randomColors() {
     const icons = colorDiv.querySelectorAll("i");
 
     const randomColor = generateRandomColor();
-    initalColors.push(randomColor);
+
+    if (colorDiv.classList.contains("locked")) {
+      initalColors.push(text.innerText);
+      return;
+    } else {
+      initalColors.push(randomColor);
+    }
+
     text.innerText = randomColor;
     colorDiv.style.backgroundColor = randomColor;
     checkContrast(randomColor, text);
