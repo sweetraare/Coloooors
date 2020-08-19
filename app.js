@@ -7,6 +7,8 @@ const generateColors = document.querySelector(".generate");
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHex = document.querySelectorAll(".color h2");
 const copyContainer = document.querySelector(".copy-container");
+const adjustButtons = document.querySelectorAll(".adjust");
+const closeAdjustmentButtons = document.querySelectorAll(".close-adjustment");
 
 //event listeners
 sliders.forEach((slider) => {
@@ -25,9 +27,21 @@ currentHex.forEach((ch) => {
   });
 });
 
-copyContainer.addEventListener("click", () => {
+copyContainer.addEventListener("transitionend", () => {
   copyContainer.classList.remove("active");
   copyContainer.children[0].classList.remove("active");
+});
+
+adjustButtons.forEach((adjustButton) => {
+  adjustButton.addEventListener("click", () =>
+    handleAdjustButtonClick(adjustButton)
+  );
+});
+
+closeAdjustmentButtons.forEach((closeAdjustmentButton) => {
+  closeAdjustmentButton.addEventListener("click", (e) => {
+    e.target.parentElement.classList.toggle("active");
+  });
 });
 
 //functions
@@ -149,6 +163,12 @@ function copyToClipborard(hex) {
 
   copyContainer.classList.add("active");
   copyContainer.children[0].classList.add("active");
+}
+
+function handleAdjustButtonClick(adjustButton) {
+  adjustButton.parentElement.parentElement
+    .querySelector(".sliders")
+    .classList.toggle("active");
 }
 
 function randomColors() {
