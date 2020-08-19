@@ -41,15 +41,15 @@ svg {
   flex-direction: column;
   position: absolute;
   bottom: 0%;
-  background-color: yellowgreen;
+  background-color: lightgray;
   padding: 1rem;
   width: 80%;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  transform: translateY(100%);
-  opacity: 0;
   transition: all 0.5s ease-in-out;
-  pointer-events: none;
+  /* transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none; */
 }
 
 .sliders.active {
@@ -113,4 +113,15 @@ svg {
   background: none;
   cursor: pointer;
   margin: 2rem 0rem;
+}
+
+/* slider styles */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0 rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
 }
