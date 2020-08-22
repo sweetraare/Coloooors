@@ -58,7 +58,9 @@ svg {
   pointer-events: all;
 }
 
-.sliders button {
+.sliders button,
+.close-save,
+.close-library {
   position: absolute;
   top: 0;
   right: 0;
@@ -84,7 +86,9 @@ svg {
   height: 20vh;
 }
 
-.panel button {
+.panel button,
+.submit-save,
+.preview-button {
   font-size: 1.2rem;
   margin: 1rem;
   padding: 1rem 2rem;
@@ -126,7 +130,9 @@ input[type="range"] {
   cursor: pointer;
 }
 
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -141,7 +147,9 @@ input[type="range"] {
   transition: all 0.5s ease-in-out;
 }
 
-.copy-popup {
+.copy-popup,
+.save-popup,
+.library-popup {
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -154,16 +162,87 @@ input[type="range"] {
   min-height: 30%;
 }
 
-.copy-popup h3 {
+.copy-popup h3,
+.save-popup h3,
+.library-popup h3 {
   font-size: 2rem;
   padding: 2rem;
 }
 
-.copy-container.active {
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   opacity: 1;
   pointer-events: all;
 }
 
-.copy-popup.active {
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
   transform: translateY(0rem);
+}
+
+.close-save,
+.close-library {
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 0;
+}
+
+.save-name {
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  border: lightblue 2px solid;
+  padding: 0.5rem;
+}
+
+.preview {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.library-popup {
+  width: 50%;
+  max-height: 60%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.library-popup::-webkit-scrollbar {
+  display: none;
+}
+
+.preview-name {
+  font-size: 1.5rem;
+  flex: 1;
+  flex-shrink: 1;
+  max-width: 40%;
+  overflow: hidden;
+  margin-right: 1rem;
+  align-self: center;
+}
+
+.colors-container {
+  display: flex;
+  justify-content: space-between;
+  flex: 3;
+}
+
+.small-color {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.preview-button {
+  flex: 1;
+  margin-left: 1rem;
+  max-width: 20%;
+  text-align: center;
+}
+
+.library-popup {
+  display: inline;
 }
