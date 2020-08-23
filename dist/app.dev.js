@@ -226,7 +226,7 @@ function saveToLocalStorage(newPaletteObject) {
   storageArray.push(newPaletteObject);
   localStorage.setItem("palettes", JSON.stringify(storageArray));
   savedPalettes = storageArray;
-  updateLibrary(newPaletteObject, savedPalettes.length - 7);
+  updateLibrary(newPaletteObject, savedPalettes.length - 1);
 }
 
 function updateLibrary(_ref2, index) {

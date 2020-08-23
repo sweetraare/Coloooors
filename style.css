@@ -2,10 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Do Hyeon", sans-serif;
+
+  /* variables */
+  --primary-light: #8abdff;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+  --white: #ffffff;
+  --greyLight-1: #e4ebf5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
 }
 
 body {
   color: gray;
+
+  background-color: var(--greyLight-1);
 }
 
 path,
@@ -41,7 +54,7 @@ svg {
   flex-direction: column;
   position: absolute;
   bottom: 0%;
-  background-color: lightgray;
+  background-color: var(--greyLight-3);
   padding: 1rem;
   width: 80%;
   border-top-left-radius: 1rem;
@@ -50,6 +63,7 @@ svg {
   transform: translateY(100%);
   opacity: 0;
   pointer-events: none;
+  color: gray;
 }
 
 .sliders.active {
@@ -84,18 +98,6 @@ svg {
   align-items: center;
   justify-content: space-evenly;
   height: 20vh;
-}
-
-.panel button,
-.submit-save,
-.preview-button {
-  font-size: 1.2rem;
-  margin: 1rem;
-  padding: 1rem 2rem;
-  background-color: lightblue;
-  border: none;
-  cursor: pointer;
-  border-radius: 1rem;
 }
 
 .panel p {
@@ -136,7 +138,7 @@ input[type="range"] {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(109, 93, 252, 0.4);
   width: 100%;
   height: 100%;
   display: flex;
@@ -150,7 +152,7 @@ input[type="range"] {
 .copy-popup,
 .save-popup,
 .library-popup {
-  background-color: white;
+  background-color: var(--greyLight-1);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -189,10 +191,25 @@ input[type="range"] {
 }
 
 .save-name {
-  font-size: 1.5rem;
-  border-radius: 2rem;
-  border: lightblue 2px solid;
-  padding: 0.5rem;
+  width: 20.4rem;
+  height: 4rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
+    inset -0.2rem -0.2rem 0.5rem var(--white);
+  background: none;
+  font-family: inherit;
+  color: var(--greyDark);
+}
+.save-name::placeholder {
+  color: var(--greyLight-3);
+}
+.save-name:focus {
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
 }
 
 .preview {
@@ -245,4 +262,33 @@ input[type="range"] {
 
 .library-popup {
   display: inline;
+}
+
+.panel button,
+.preview-button,
+.submit-save {
+  border: none;
+  margin: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+  color: var(--greyDark);
+}
+.panel button:hover,
+.preview-button:hover,
+.submit-save:hover {
+  color: var(--primary);
+}
+.panel button:active,
+.preview-button:active,
+.submit-save:active {
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
+    inset -0.2rem -0.2rem 0.5rem var(--white);
 }

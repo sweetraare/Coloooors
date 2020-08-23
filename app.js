@@ -265,7 +265,7 @@ function saveToLocalStorage(newPaletteObject) {
 
   savedPalettes = storageArray;
 
-  updateLibrary(newPaletteObject, savedPalettes.length - 7);
+  updateLibrary(newPaletteObject, savedPalettes.length - 1);
 }
 
 function updateLibrary({ name, colors }, index) {
